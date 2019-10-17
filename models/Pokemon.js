@@ -87,7 +87,7 @@ const PokemonSchema = new mongoose.Schema({
         required: true
     },
     hatchable: {
-        type: Number,
+        type: Boolean,
         required: true
     },
     shiny: {
