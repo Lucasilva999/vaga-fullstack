@@ -8,13 +8,13 @@ exports.getPokemons = async (req, res)=> {
 
 //Create
 exports.createPokemons = async (req, res)=> {
-    const { pokedex_number, name, img_name, generation, evolution_stage,
+    const { pokedex_number, name, img, generation, evolution_stage,
         evolved, family_id, cross_gen, type_1, type_2, weather_1,
         weather_2, stat_total, atk, def, sta, legendary, aquireable,
         spawns, regional, raidable, hatchable, shiny, nest, new_pokemon, 
         not_gettable, future_evolve, full_cp_40, full_cp_39 } = req.body;
 
-    Pokemon.create({pokedex_number, name, img_name, generation, evolution_stage,
+    Pokemon.create({pokedex_number, name, img, generation, evolution_stage,
         evolved, family_id, cross_gen, type_1, type_2, weather_1,
         weather_2, stat_total, atk, def, sta, legendary, aquireable,
         spawns, regional, raidable, hatchable, shiny, nest, new_pokemon, 
@@ -25,17 +25,17 @@ exports.createPokemons = async (req, res)=> {
 
 //Update
 exports.updatePokemons = async (req, res)=> {
-    const { _id, pokedex_number, name, img_name, generation, evolution_stage,
+    const { _id, pokedex_number, name, img, generation, evolution_stage,
     evolved, family_id, cross_gen, type_1, type_2, weather_1,
     weather_2, stat_total, atk, def, sta, legendary, aquireable,
     spawns, regional, raidable, hatchable, shiny, nest, new_pokemon, 
     not_gettable, future_evolve, full_cp_40, full_cp_39 } = req.body;
 
-    await Pokemon.findOneAndUpdate({_id}, { pokedex_number, name, img_name, generation, evolution_stage,
+    await Pokemon.findOneAndUpdate({_id}, { pokedex_number, name, img, generation, evolution_stage,
         evolved, family_id, cross_gen, type_1, type_2, weather_1,
         weather_2, stat_total, atk, def, sta, legendary, aquireable,
         spawns, regional, raidable, hatchable, shiny, nest, new_pokemon, 
-        not_gettable, future_evolve, full_cp_40, full_cp_39 });
+        not_gettable, future_evolve, full_cp_40, full_cp_39 }, {new: true});
 
     res.end();
 }

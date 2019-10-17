@@ -3,12 +3,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 //Config
     //DotEnv
     dotenv.config();
     //Definindo Porta
     const porta = process.env.PORTA || 5000;
+
+    //CORS
+    app.use(cors());
 
     //Express BodyParser
     app.use(express.json());

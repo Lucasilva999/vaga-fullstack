@@ -10,7 +10,7 @@ const PokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    img_name: {
+    img: {
         type: String,
         required: true
     },
