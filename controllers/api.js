@@ -44,7 +44,6 @@ exports.updatePokemons = async (req, res)=> {
 exports.deletePokemons = async (req, res)=> {
     const _id = req.body._id;
     await Pokemon.deleteOne({_id});
-    console.log(req.body)
     res.end();
 }
 
