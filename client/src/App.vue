@@ -1,25 +1,34 @@
 <template>
   <div id="app">
     <div class="container my-3">
-      <h1 class="text-center mb-3">Products List</h1>
-
-      <div class="row justify-content-center mb-5">
-          <div class="col-sm-4">
-              <input v-model="search" class="form-control" type="text" placeholder="Search...">
-          </div>
-          <div class="col-sm-2">
-            <button href="#modal_insert" class="btn btn-primary"
-                data-toggle="modal" data-target="#modal_insert">Insert Product!
-            </button>
-          </div>
+      <div class="row mx-auto">
+        <div class="col text-center justify-content-center mb-5">
+          <img class="img-fluid" src="./assets/pokeball.png" alt="Pokemon List" style="width:5rem;">
+          <h1 class="text-uppercase text-monospace font-weight-bold">Pokemon List</h1>
+        </div>
       </div>
+      
+      <ul class="nav mb-4">
+        <li class="nav-item mr-3">
+          <button href="#modal_insert" class="btn btn-primary"
+              data-toggle="modal" data-target="#modal_insert">
+              <span class="text-uppercase text-monospace font-weight-bold">
+                  Add Pokemon!
+              </span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <input v-model="search" class="form-control" type="text" 
+          placeholder="Search Pokemon..." style="width:20rem;">
+        </li>
+      </ul>
 
       <!-- Modal Insert -->
       <div id="modal_insert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
           <div class="modal-content mx-3 p-3">
             <div class="modal-header">
-              <h5 class="modal-title">Modal title</h5>
+              <h5 class="modal-title">Add New Pokemon</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -230,13 +239,15 @@
 
       
       <div v-for="item in filteredPokemonList" :key="item._id">
-          <div class="card my-3 p-2">
-            <div class="card-header">
+          <div class="card p-2" style="border:none;">
+            <div class="card-header bg-primary text-white">
               <span class="text-uppercase text-monospace font-weight-bold" style="font-size:1.5rem;">
                   {{item.name}}
               </span>
-              <button class="btn btn-danger btn-sm float-right">Delete</button>
-              <button class="btn btn-info btn-sm float-right mx-1">Edit</button>
+              <i class="far fa-trash-alt fa-2x float-right ml-2 pointer"
+              data-toggle="tooltip" data-placement="bottom" title="Delete"></i>
+              <i class="far fa-edit fa-2x float-right pointer"
+              data-toggle="tooltip" data-placement="top" title="Edit"></i>
             </div>
           <div class="card-body">
             <div class="row">
@@ -365,6 +376,8 @@ export default {
 </script>
 
 <style scoped>
-
+.pointer {
+  cursor: pointer;
+}
 </style>
 
