@@ -22,32 +22,23 @@
           placeholder="Search Pokemon..." style="width:20rem;">
         </li>
         <span class="nav-item text-uppercase text-monospace mr-2">Filter By:</span>
-        <li class="nav-item text-uppercase text-monospace">
-          <div class="form-check form-check-inline">
-            <input v-model="filter" class="form-check-input" type="radio" name="pokedex_number" id="pokedex_number" value="pokedex_number">
-            <label class="form-check-label" for="pokedex_number">Pokedex Number</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input v-model="filter" class="form-check-input" type="radio" name="alphabetical_order" id="alphabetical_order" value="name">
-            <label class="form-check-label" for="alphabetical_order">Alphabetical Order</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input v-model="filter" class="form-check-input" type="radio" name="atk" id="atk" value="atk">
-            <label class="form-check-label" for="atk">ATK</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input v-model="filter" class="form-check-input" type="radio" name="def" id="def" value="def">
-            <label class="form-check-label" for="def">DEF</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input v-model="filter" class="form-check-input" type="radio" name="sta" id="sta" value="sta">
-            <label class="form-check-label" for="sta">STA</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input v-model="filter" class="form-check-input" type="radio" name="stat_total" id="stat_total" value="stat_total">
-            <label class="form-check-label" for="stat_total">STAT TOTAL</label>
-          </div>
+        <li class="nav-item text-uppercase text-monospace mr-3">
+          <select v-model="filter" class="form-control form-control-sm">
+            <option value="pokedex_number" selected>Pokedex Number</option>
+            <option value="name">Alphabetical Order</option>
+            <option value="atk">ATK</option>
+            <option value="def">DEF</option>
+            <option value="sta">STA</option>
+            <option value="stat_total">STAT TOTAL</option>
+          </select>
         </li>
+        <span class="nav-item text-uppercase text-monospace mr-2">Order By:</span>
+        <li class="nav-item text-uppercase text-monospace mr-3">
+          <select v-model="filter_asc" class="form-control form-control-sm">
+            <option value="asc" selected>ASC</option>
+            <option value="desc">DESC</option>
+          </select>
+      </li>
       </ul>
       
       <!-- Modal Insert -->
@@ -271,10 +262,10 @@
               <span class="text-uppercase text-monospace font-weight-bold" style="font-size:1.5rem;">
                   {{item.name}}
               </span>
-              <i class="far fa-trash-alt fa-2x float-right ml-2 pointer"
+              <i class="far fa-trash-alt float-right ml-2 pointer" style="font-size:1.3rem;"
                 data-toggle="modal" :data-target="'#modal_delete_' + item._id" title="Delete">
               </i>
-              <i class="far fa-edit fa-2x float-right pointer"
+              <i class="far fa-edit float-right pointer" style="font-size:1.3rem;"
               @click="updateValueEditPokemon(index)"
                 data-toggle="modal" :data-target="'#modal_edit_' + item._id" title="Edit"></i>
               </div>
@@ -601,9 +592,10 @@ export default {
     return {
       search: '',
       filter: 'pokedex_number',
+      filter_asc: 'asc',
       pagination: {
         page: 1,
-        limit: 2,
+        limit: 3,
       },
       pokemon: [],
       new_pokemon: {
@@ -675,13 +667,24 @@ export default {
       return this.filteredPokemonList.slice(this.calcOffset, (this.calcOffset + this.pagination.limit));
     },
     filteredPokemonList() {
-      return this.pokemon.sort((a, b) => {
+      if(this.filter_asc === 'asc') {
+        return this.pokemon.sort((a, b) => {
         if(a[this.filter] < b[this.filter]) { return -1;}
         if(a[this.filter] > b[this.filter]) { return 1;}
         return 0;
       }).filter((item) => {
         return item.name.toLowerCase().match(this.search.toLowerCase());
       })
+      }
+      if(this.filter_asc === 'desc') {
+        return this.pokemon.sort((a, b) => {
+        if(a[this.filter] < b[this.filter]) { return 1;}
+        if(a[this.filter] > b[this.filter]) { return -1;}
+        return 0;
+      }).filter((item) => {
+        return item.name.toLowerCase().match(this.search.toLowerCase());
+      })
+      }  
     },
     calcOffset() {
       return (this.pagination.page - 1) * this.pagination.limit;
@@ -694,7 +697,7 @@ export default {
     },
     calcTotalPages() {
       return Math.ceil(this.calcTotalPokemon / this.pagination.limit);
-    }
+    },
   },
   methods: {
     getData() {
@@ -813,6 +816,11 @@ export default {
         full_cp_40: '',
         full_cp_39: ''
       }
+    }
+  },
+  watch: {
+    filter_asc() {
+      this.getData();
     }
   },
   beforeMount() {
