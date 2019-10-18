@@ -29,12 +29,15 @@
             <option value="atk">ATK</option>
             <option value="def">DEF</option>
             <option value="sta">STA</option>
-            <option value="stat_total">STAT TOTAL</option>
+            <option value="full_cp_39">100% CP @39</option>
+            <option value="full_cp_40">100% CP @40</option>
+            <option value="evolution_stage">EVOLUTION STAGE</option>
+            <option value="family_id">FAMILY ID</option>
           </select>
         </li>
         <span class="nav-item text-uppercase text-monospace mr-2">Order By:</span>
         <li class="nav-item text-uppercase text-monospace mr-3">
-          <select v-model="filter_asc" class="form-control form-control-sm">
+          <select v-model="filter_order" class="form-control form-control-sm">
             <option value="asc" selected>ASC</option>
             <option value="desc">DESC</option>
           </select>
@@ -592,7 +595,7 @@ export default {
     return {
       search: '',
       filter: 'pokedex_number',
-      filter_asc: 'asc',
+      filter_order: 'asc',
       pagination: {
         page: 1,
         limit: 3,
@@ -667,7 +670,7 @@ export default {
       return this.filteredPokemonList.slice(this.calcOffset, (this.calcOffset + this.pagination.limit));
     },
     filteredPokemonList() {
-      if(this.filter_asc === 'asc') {
+      if(this.filter_order === 'asc') {
         return this.pokemon.sort((a, b) => {
         if(a[this.filter] < b[this.filter]) { return -1;}
         if(a[this.filter] > b[this.filter]) { return 1;}
@@ -676,7 +679,7 @@ export default {
         return item.name.toLowerCase().match(this.search.toLowerCase());
       })
       }
-      if(this.filter_asc === 'desc') {
+      if(this.filter_order === 'desc') {
         return this.pokemon.sort((a, b) => {
         if(a[this.filter] < b[this.filter]) { return 1;}
         if(a[this.filter] > b[this.filter]) { return -1;}
@@ -819,8 +822,11 @@ export default {
     }
   },
   watch: {
-    filter_asc() {
-      this.getData();
+    filter() {
+      this.filter_order = 'asc';
+    },
+    filter_order() {
+      this.pagination.page = 1;
     }
   },
   beforeMount() {
