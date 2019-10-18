@@ -230,6 +230,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="resetPokemonObject('new_pokemon')" type="button" class="btn btn-info">Clear</button>
             <button @click="insertNewPokemon" type="button" class="btn btn-primary" data-dismiss="modal">Add Pokemon!</button>
           </div>
           </div>
@@ -251,50 +252,50 @@
                 data-toggle="modal" :data-target="'#modal_edit_' + item._id" title="Edit"></i>
               </div>
           <div class="card-body">
-            <div class="row">
+            <div class="row text-uppercase text-monospace">
                 <div class="col-sm-2">
                     <div class="img-container" style="width: 10rem; height:10rem;">
                         <img class="card-img-top img-fluid" :src="item.img" :alt="item.name">
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <p>Pokedex: {{item.pokedex_number}}</p>
-                    <p>Generation: {{item.generation}}</p>
-                    <p>Evolution Stage: {{item.evolution_stage}}</p>
-                    <p>Family ID: {{item.family_id}}</p>
-                    <p>Evolved: {{item.evolved}}</p>
+                    <p>Pokedex: <span class="badge badge-danger">{{item.pokedex_number}}</span></p>
+                    <p>Generation: <span class="badge badge-danger">{{item.generation}}</span></p>
+                    <p>Evolution Stage: <span class="badge badge-danger">{{item.evolution_stage}}</span></p>
+                    <p>Family ID: <span class="badge badge-danger">{{item.family_id}}</span></p>
+                    <p>Type 1: {{item.type_1}}</p>
+                    <p>Type 2: {{item.type_2}}</p>                    
                 </div>
                 <div class="col-sm-2">
-                    <p>Type 1: {{item.type_1}}</p>
-                    <p>Type 2: {{item.type_2}}</p>
+                    <p>Legendary: {{item.legendary === true ? 'Yes' : 'No'}}</p>
                     <p>Weather 1: {{item.weather_1}}</p>
                     <p>Weather 2: {{item.weather_2}}</p>
-                    <p>Future Evolve: {{item.future_evolve}}</p>
-                    <p>Legendary: {{item.legendary}}</p>
+                    <p>Evolved: {{item.evolved === true ? 'Yes' : 'No'}}</p>
+                    <p>Future Evolve: {{item.future_evolve === true ? 'Yes' : 'No'}}</p>
                 </div>
                 <div class="col-sm-2">
-                    <p>Cross-Gen: {{item.cross_gen}}</p>
-                    <p>Shiny: {{item.shiny}}</p>
-                    <p>Aquireable: {{item.aquireable}}</p>
-                    <p>New: {{item.new_pokemon}}</p>
-                    <p>Nest: {{item.nest}}</p>
-                    <p>Not Gettable: {{item.not_gettable}}</p>
-
+                    <p>Cross-Gen: {{item.cross_gen === true ? 'Yes' : 'No'}}</p>
+                    <p>Shiny: {{item.shiny === true ? 'Yes' : 'No'}}</p>
+                    <p>Aquireable: {{item.aquireable === true ? 'Yes' : 'No'}}</p>
+                    <p>New: {{item.new_pokemon === true ? 'Yes' : 'No'}}</p>
+                    <p>Nest: {{item.nest === true ? 'Yes' : 'No'}}</p>
                 </div>
                 <div class="col-sm-2">
-                    <p>Spawns: {{item.spawns}}</p>
-                    <p>Regional: {{item.regional}}</p>
-                    <p>Raidable: {{item.raidable}}</p>
-                    <p>Hatchable: {{item.hatchable}}</p>
-                    <p>Stat Total: {{item.stat_total}}</p>
+                    <p>Spawns: {{item.spawns === true ? 'Yes' : 'No'}}</p>
+                    <p>Regional: {{item.regional === true ? 'Yes' : 'No'}}</p>
+                    <p>Raidable: {{item.raidable === true ? 'Yes' : 'No'}}</p>
+                    <p>Hatchable: {{item.hatchable === true ? 'Yes' : 'No'}}</p>
+                    <p>Not Gettable: {{item.not_gettable === true ? 'Yes' : 'No'}}</p>
+                    
                     
                 </div>
                 <div class="col-sm-2">
-                    <p>ATK: {{item.atk}}</p>
-                    <p>DEF: {{item.def}}</p>
-                    <p>STA: {{item.sta}}</p>
-                    <p>100% CP @39: {{item.full_cp_39}}</p>
-                    <p>100% CP @40: {{item.full_cp_40}}</p>
+                    <p>ATK: <span class="badge badge-primary">{{item.atk}}</span></p>
+                    <p>DEF: <span class="badge badge-info">{{item.def}}</span></p>
+                    <p>STA: <span class="badge badge-success">{{item.sta}}</span></p>
+                    <p>100% CP @39: <span class="badge badge-warning">{{item.full_cp_39}}</span></p>
+                    <p>100% CP @40: <span class="badge badge-warning">{{item.full_cp_40}}</span></p>
+                    <p>Stat Total: <span class="badge badge-warning">{{item.stat_total}}</span></p>
                 </div>
             </div>
           </div>
@@ -507,6 +508,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button @click="resetPokemonObject('edit_pokemon')" type="button" class="btn btn-info">Clear</button>
               <button @click="updatePokemon" type="button" class="btn btn-primary" data-dismiss="modal">Update Pokemon!</button>
             </div>
             </div>
@@ -641,6 +643,7 @@ export default {
         data: this.new_pokemon,
       })
       await this.getData();
+      this.resetNewPokemonObject();
 
       } catch(err) {
         console.log(err);
@@ -702,6 +705,39 @@ export default {
         this.edit_pokemon.future_evolve = this.filteredPokemonList[index].future_evolve;
         this.edit_pokemon.full_cp_39 = this.filteredPokemonList[index].full_cp_39;
         this.edit_pokemon.full_cp_40 = this.filteredPokemonList[index].full_cp_40;        
+    },
+    resetPokemonObject(obj) {
+      this[obj] = {
+        pokedex_number: '',
+        name: '',
+        img: '',
+        generation: '',
+        evolution_stage: '',
+        evolved: false,
+        family_id: '',
+        cross_gen: false,
+        type_1: '',
+        type_2: '',
+        weather_1: '',
+        weather_2: '',
+        stat_total: '',
+        atk: '',
+        def: '',
+        sta: '',
+        legendary: false,
+        aquireable: false,
+        spawns: false,
+        regional: false,
+        raidable: false,
+        hatchable: false,
+        shiny: false,
+        nest: false,
+        new_pokemon: false,
+        not_gettable: false,
+        future_evolve: false,
+        full_cp_40: '',
+        full_cp_39: ''
+      }
     }
   
   },
