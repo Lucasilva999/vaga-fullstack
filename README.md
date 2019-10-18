@@ -1,49 +1,25 @@
-# Teste de Fullstack
+# Instruções
 
-Olá Dev! Tudo bem?
+## Iniciando o Projeto
 
-Nós estamos sempre em busca de profissionais interessantes e interessados, com boa capacidade de aprendizado, adaptação e principalmente bom senso!
+- Utilize o terminal para acessar a pasta principal do projeto e use o comando **npm i** para instalar as dependências
+- Use o comando **npm start** para iniciar o lado servidor da aplicação
+- Inicie um novo terminal, acesse a pasta **client** e utilize novamente o comando **npm i** e espere até que as dependências sejam baixadas
+- Utilize o comando **npm run serve** para inicializar o lado cliente da aplicação
+- Acesse **localhost:8000** no seu navegador e comece a cadastrar Pokemon!
 
-Este teste tem como objetivo avaliar e desafiar você. Não é obrigatório realizá-lo completamente, queremos apenas reconhecer seu esforço e potencial para aprender, se adaptar e tomar decisões.
+Obs: Por padrão, o servidor está configurado para rodar na porta **3030** e o cliente na porta **8080**
 
-Vamos ao teste!
+Lembrando que é necessário haver uma instalação do MongoDB na máquina para poder funcionar!
+Caso seja necessário alterar a string de conexão, ela está localizada no arquivo **.env**
 
-## Desafio Pokémon
+## Tecnologias Utilizadas
 
-Nós temos um problema, atualmente nosso sistema é só um excel, cheio de informações sobre Pokémon. Nós usamos ele como banco de dados e ao mesmo tempo interface de gerenciamento, inserindo, editando, deletando e filtrando os dados.
-
-Sua missão é criar um sistema para substituir este excel, pois queremos expandir e acrescentar features. Queremos manter essas funcionalidades básicas, mas principalmente queremos uma forma prática e agradável de buscar os dados, com listagem, filtros, paginação e detalhe sobre cada Pokémon.
-
-Fique à vontade com o layout, precisamos de uma interface que consiga entregar as funcionalidades principais e substituir o excel.
-
-
-## Consigo fazer?
-
-Consegue sim! Só precisa saber (ou aprender agora) um pouco sobre as seguintes tecnologias:
 - HTML
-- CSS 
-- Javascript
-- NodeJS
-- Algum banco de dados, por exemplo, MySQL, SQL Server, MongoDB, etc...
-- Git
-
-
-## Regras
-
-Para o desafio ficar mais interessante, decidimos criar umas regras:
-- No layout, deve utilizar algum framework CSS (ex: Bootstrap, MaterializeCSS, Bulma...)
-- No frontend, deve utilizar algum framework (ex: VueJS, ReactJS, Angular...tente não usar jQuery), lembrando que VueJS é diferencial, pois utilizamos aqui na Red
-- No backend, deve utilizar NodeJS
-- Opcional: usar algum automatizador ou ferramenta de build (ex: Webpack, Grunt, Gulp...)
-
-## Por onde começo?
-
-Primeiramente, você pode fazer um fork desse repositório aqui, para sua conta do Github, depois disso crie uma branch nova com o seu nome (ex: nome_sobrenome), para podermos indentificá-lo.
-
-Após terminar o desafio, você pode solicitar um pull request para a branch master do nosso repositório. Vamos receber e fazer a avaliação de todos.
-
-## Só isso?
-
-Só! Mas se estiver motivado e quiser ser diferencial, tente preparar o projeto para ser executado de maneira prática, usando alguma ferramenta que facilite isso (ex: npm, yarn, docker, etc...). 
-
-Boa sorte! :)
+- CSS
+- Bootstrap
+- JavaScript/Node.js
+- Express
+- Vue.js
+- MongoDB
+- GIT
