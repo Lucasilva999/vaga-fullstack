@@ -11,7 +11,7 @@
 Obs: Por padrão, o servidor está configurado para rodar na porta **3030** e o cliente na porta **8080**
 
 Lembrando que é necessário haver uma instalação do MongoDB na máquina para poder funcionar!
-Caso seja necessário alterar a string de conexão, ela está localizada no arquivo **.env**
+Caso seja necessário alterar a string de conexão, ela está localizada no arquivo **.env** na pasta raíz do projeto
 
 ## Tecnologias Utilizadas
 
