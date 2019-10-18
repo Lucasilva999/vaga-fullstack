@@ -21,13 +21,31 @@
           <input v-model="search" class="form-control" type="text" 
           placeholder="Search Pokemon..." style="width:20rem;">
         </li>
-        <li class="nav-item">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" 
-            value="true" id="alphabetical_order">
-            <label class="form-check-label" for="alphabetical_order">
-                Alphabetical Order
-            </label>
+        <span class="nav-item text-uppercase text-monospace mr-2">Filter By:</span>
+        <li class="nav-item text-uppercase text-monospace">
+          <div class="form-check form-check-inline">
+            <input v-model="filter" class="form-check-input" type="radio" name="pokedex_number" id="pokedex_number" value="pokedex_number">
+            <label class="form-check-label" for="pokedex_number">Pokedex Number</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input v-model="filter" class="form-check-input" type="radio" name="alphabetical_order" id="alphabetical_order" value="name">
+            <label class="form-check-label" for="alphabetical_order">Alphabetical Order</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input v-model="filter" class="form-check-input" type="radio" name="atk" id="atk" value="atk">
+            <label class="form-check-label" for="atk">ATK</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input v-model="filter" class="form-check-input" type="radio" name="def" id="def" value="def">
+            <label class="form-check-label" for="def">DEF</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input v-model="filter" class="form-check-input" type="radio" name="sta" id="sta" value="sta">
+            <label class="form-check-label" for="sta">STA</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input v-model="filter" class="form-check-input" type="radio" name="stat_total" id="stat_total" value="stat_total">
+            <label class="form-check-label" for="stat_total">STAT TOTAL</label>
           </div>
         </li>
       </ul>
@@ -247,7 +265,7 @@
       </div>
       <!-- End of Modal Insert -->
       
-      <div v-for="(item, index) in filteredPokemonList" :key="item._id">
+      <div v-for="(item, index) in paginatedAndFilteredPokemonList" :key="item._id">
           <div class="card p-2" style="border:none;">
             <div class="card-header bg-primary text-white">
               <span class="text-uppercase text-monospace font-weight-bold" style="font-size:1.5rem;">
@@ -551,6 +569,22 @@
         <!-- End of Modal Delete -->
 
       </div>
+
+      <nav class="my-3">
+      <ul class="pagination">
+          <li class="page-item pointer"><a class="page-link" v-if="pagination.page > 1"
+          @click="goToPreviousPage">Previous</a></li>
+          <li class="page-item pointer"><a class="page-link" v-if="pagination.page > 1"
+          @click="goToPreviousPage">{{pagination.page - 1}}</a></li>
+        
+          <li class="page-item active pointer"><a class="page-link">{{pagination.page}}</a></li>
+        
+          <li class="page-item pointer"><a class="page-link" v-if="pagination.page < calcTotalPages"
+          @click="goToNextPage">{{pagination.page + 1}}</a></li>
+          <li class="page-item pointer"><a class="page-link" v-if="pagination.page < calcTotalPages"
+          @click="goToNextPage">Next</a></li>
+      </ul>
+    </nav>
   </div>
   </div>
 </template>
@@ -566,6 +600,11 @@ export default {
   data() {
     return {
       search: '',
+      filter: 'pokedex_number',
+      pagination: {
+        page: 1,
+        limit: 2,
+      },
       pokemon: [],
       new_pokemon: {
         pokedex_number: '',
@@ -632,13 +671,29 @@ export default {
     }
   },
   computed: {
+    paginatedAndFilteredPokemonList() {
+      return this.filteredPokemonList.slice(this.calcOffset, (this.calcOffset + this.pagination.limit));
+    },
     filteredPokemonList() {
-      return this.pokemon.sort((a, b) => a.pokedex_number - b.pokedex_number).filter((item) => {
+      return this.pokemon.sort((a, b) => {
+        if(a[this.filter] < b[this.filter]) { return -1;}
+        if(a[this.filter] > b[this.filter]) { return 1;}
+        return 0;
+      }).filter((item) => {
         return item.name.toLowerCase().match(this.search.toLowerCase());
       })
     },
-    sortByAlphabeticalOrder() {
-      return this.filteredPokemonList.sort((a, b) => a.name - b.name);
+    calcOffset() {
+      return (this.pagination.page - 1) * this.pagination.limit;
+    },
+    calcTotalPokemon() {
+      return this.filteredPokemonList.length;
+    },
+    calcLastOffset() {
+      return ((this.pagination.page - 1) - 1) * this.pagination.limit;
+    },
+    calcTotalPages() {
+      return Math.ceil(this.calcTotalPokemon / this.pagination.limit);
     }
   },
   methods: {
@@ -646,6 +701,14 @@ export default {
       axios.get('http://localhost:3030')
       .then(res => this.pokemon = res.data)
       .catch(err => console.log(err));
+    },
+    goToPreviousPage() {
+      this.pagination.page--;
+      console.log(this.pagination.page);
+    },
+    goToNextPage() {
+      this.pagination.page++;
+      console.log(this.pagination.page);
     },
     async insertNewPokemon() {
       try {
