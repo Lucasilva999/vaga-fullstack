@@ -285,12 +285,12 @@
                     <p>Evolution Stage: <span class="badge badge-danger">{{item.evolution_stage}}</span></p>
                     <p>Family ID: <span class="badge badge-danger">{{item.family_id}}</span></p>
                     <p>Type 1: {{item.type_1}}</p>
-                    <p>Type 2: {{item.type_2}}</p>                    
+                    <p v-if="item.type_2">Type 2: {{item.type_2}}</p>                    
                 </div>
                 <div class="col-sm-2">
                     <p>Legendary: {{item.legendary === true ? 'Yes' : 'No'}}</p>
                     <p>Weather 1: {{item.weather_1}}</p>
-                    <p>Weather 2: {{item.weather_2}}</p>
+                    <p v-if="item.weather_2">Weather 2: {{item.weather_2}}</p>
                     <p>Evolved: {{item.evolved === true ? 'Yes' : 'No'}}</p>
                     <p>Future Evolve: {{item.future_evolve === true ? 'Yes' : 'No'}}</p>
                 </div>
