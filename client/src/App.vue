@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container my-3">
       <div class="row mx-auto">
-        <div class="col text-center justify-content-center mb-5">
+        <div class="col text-center justify-content-center mb-4">
           <img class="img-fluid" src="./assets/pokeball.png" alt="Pokemon List" style="width:5rem;">
           <h1 class="text-uppercase text-monospace font-weight-bold">Pokemon List</h1>
         </div>
@@ -17,12 +17,21 @@
               </span>
           </button>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mr-3">
           <input v-model="search" class="form-control" type="text" 
           placeholder="Search Pokemon..." style="width:20rem;">
         </li>
+        <li class="nav-item">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" 
+            value="true" id="alphabetical_order">
+            <label class="form-check-label" for="alphabetical_order">
+                Alphabetical Order
+            </label>
+          </div>
+        </li>
       </ul>
-
+      
       <!-- Modal Insert -->
       <div id="modal_insert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -624,9 +633,12 @@ export default {
   },
   computed: {
     filteredPokemonList() {
-      return this.pokemon.filter((item) => {
+      return this.pokemon.sort((a, b) => a.pokedex_number - b.pokedex_number).filter((item) => {
         return item.name.toLowerCase().match(this.search.toLowerCase());
       })
+    },
+    sortByAlphabeticalOrder() {
+      return this.filteredPokemonList.sort((a, b) => a.name - b.name);
     }
   },
   methods: {
@@ -739,9 +751,8 @@ export default {
         full_cp_39: ''
       }
     }
-  
   },
-   beforeMount() {
+  beforeMount() {
     this.getData();
   }
   
