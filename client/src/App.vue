@@ -259,7 +259,7 @@
       </div>
       <!-- End of Modal Insert -->
       
-      <div v-for="(item, index) in paginatedAndFilteredPokemonList" :key="item._id">
+      <div v-for="(item) in paginatedAndFilteredPokemonList" :key="item._id">
           <div class="card p-2" style="border:none;">
             <div class="card-header bg-primary text-white">
               <span class="text-uppercase text-monospace font-weight-bold" style="font-size:1.5rem;">
@@ -269,7 +269,7 @@
                 data-toggle="modal" :data-target="'#modal_delete_' + item._id" title="Delete">
               </i>
               <i class="far fa-edit float-right pointer" style="font-size:1.3rem;"
-              @click="updateValueEditPokemon(index)"
+              @click="updateValueEditPokemon(item._id)"
                 data-toggle="modal" :data-target="'#modal_edit_' + item._id" title="Edit"></i>
               </div>
           <div class="card-body">
@@ -564,7 +564,7 @@
 
       </div>
 
-      <nav class="my-3">
+      <nav class="my-3" v-if="this.calcTotalPages > 1">
       <ul class="pagination">
           <li class="page-item pointer"><a class="page-link" v-if="pagination.page > 1"
           @click="goToPreviousPage">Previous</a></li>
@@ -672,18 +672,32 @@ export default {
     filteredPokemonList() {
       if(this.filter_order === 'asc') {
         return this.pokemon.sort((a, b) => {
-        if(a[this.filter] < b[this.filter]) { return -1;}
-        if(a[this.filter] > b[this.filter]) { return 1;}
-        return 0;
+        if(typeof a[this.filter] === 'string') {
+          if(a[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "") < b[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "")) { return -1;}
+          if(a[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "") > b[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "")) { return 1;}
+          return 0;
+        }
+        else {
+          if(a[this.filter] < b[this.filter]) { return -1;}
+          if(a[this.filter] > b[this.filter]) { return 1;}
+          return 0;
+        }
       }).filter((item) => {
         return item.name.toLowerCase().match(this.search.toLowerCase());
       })
       }
       if(this.filter_order === 'desc') {
         return this.pokemon.sort((a, b) => {
-        if(a[this.filter] < b[this.filter]) { return 1;}
-        if(a[this.filter] > b[this.filter]) { return -1;}
-        return 0;
+        if(typeof a[this.filter] === 'string') {
+          if(a[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "") < b[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "")) { return 1;}
+          if(a[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "") > b[this.filter].normalize('NFD').replace(/[\u0300-\u036f]/g, "")) { return -1;}
+          return 0;
+        }
+        else {
+          if(a[this.filter] < b[this.filter]) { return 1;}
+          if(a[this.filter] > b[this.filter]) { return -1;}
+          return 0;
+        }
       }).filter((item) => {
         return item.name.toLowerCase().match(this.search.toLowerCase());
       })
@@ -724,7 +738,7 @@ export default {
         data: this.new_pokemon,
       })
       await this.getData();
-      this.resetNewPokemonObject();
+      this.resetPokemonObject('new_pokemon');
 
       } catch(err) {
         console.log(err);
@@ -755,37 +769,38 @@ export default {
         console.log(err)
       }
     },
-    updateValueEditPokemon(index) {
-        this.edit_pokemon._id = this.filteredPokemonList[index]._id;
-        this.edit_pokemon.pokedex_number = this.filteredPokemonList[index].pokedex_number;
-        this.edit_pokemon.name = this.filteredPokemonList[index].name;
-        this.edit_pokemon.img = this.filteredPokemonList[index].img;
-        this.edit_pokemon.generation = this.filteredPokemonList[index].generation;
-        this.edit_pokemon.evolution_stage = this.filteredPokemonList[index].evolution_stage;
-        this.edit_pokemon.evolved = this.filteredPokemonList[index].evolved;
-        this.edit_pokemon.family_id = this.filteredPokemonList[index].family_id;
-        this.edit_pokemon.cross_gen = this.filteredPokemonList[index].cross_gen;
-        this.edit_pokemon.type_1 = this.filteredPokemonList[index].type_1;
-        this.edit_pokemon.type_2 = this.filteredPokemonList[index].type_2;
-        this.edit_pokemon.weather_1 = this.filteredPokemonList[index].weather_1;
-        this.edit_pokemon.weather_2 = this.filteredPokemonList[index].weather_2;
-        this.edit_pokemon.stat_total = this.filteredPokemonList[index].stat_total;
-        this.edit_pokemon.atk = this.filteredPokemonList[index].atk;
-        this.edit_pokemon.def = this.filteredPokemonList[index].def;
-        this.edit_pokemon.sta = this.filteredPokemonList[index].sta;
-        this.edit_pokemon.legendary = this.filteredPokemonList[index].legendary;
-        this.edit_pokemon.aquireable = this.filteredPokemonList[index].aquireable;
-        this.edit_pokemon.spawns = this.filteredPokemonList[index].spawns;
-        this.edit_pokemon.regional = this.filteredPokemonList[index].regional;
-        this.edit_pokemon.raidable = this.filteredPokemonList[index].raidable;
-        this.edit_pokemon.hatchable = this.filteredPokemonList[index].hatchable;
-        this.edit_pokemon.shiny = this.filteredPokemonList[index].shiny;
-        this.edit_pokemon.nest = this.filteredPokemonList[index].nest;
-        this.edit_pokemon.new_pokemon = this.filteredPokemonList[index].new_pokemon;
-        this.edit_pokemon.not_gettable = this.filteredPokemonList[index].not_gettable;
-        this.edit_pokemon.future_evolve = this.filteredPokemonList[index].future_evolve;
-        this.edit_pokemon.full_cp_39 = this.filteredPokemonList[index].full_cp_39;
-        this.edit_pokemon.full_cp_40 = this.filteredPokemonList[index].full_cp_40;        
+    updateValueEditPokemon(itemId) {
+      let updatedObj = this.filteredPokemonList.filter(obj => obj._id === itemId);
+        this.edit_pokemon._id = updatedObj[0]._id;
+        this.edit_pokemon.pokedex_number = updatedObj[0].pokedex_number;
+        this.edit_pokemon.name = updatedObj[0].name;
+        this.edit_pokemon.img = updatedObj[0].img;
+        this.edit_pokemon.generation = updatedObj[0].generation;
+        this.edit_pokemon.evolution_stage = updatedObj[0].evolution_stage;
+        this.edit_pokemon.evolved = updatedObj[0].evolved;
+        this.edit_pokemon.family_id = updatedObj[0].family_id;
+        this.edit_pokemon.cross_gen = updatedObj[0].cross_gen;
+        this.edit_pokemon.type_1 = updatedObj[0].type_1;
+        this.edit_pokemon.type_2 = updatedObj[0].type_2;
+        this.edit_pokemon.weather_1 = updatedObj[0].weather_1;
+        this.edit_pokemon.weather_2 = updatedObj[0].weather_2;
+        this.edit_pokemon.stat_total = updatedObj[0].stat_total;
+        this.edit_pokemon.atk = updatedObj[0].atk;
+        this.edit_pokemon.def = updatedObj[0].def;
+        this.edit_pokemon.sta = updatedObj[0].sta;
+        this.edit_pokemon.legendary = updatedObj[0].legendary;
+        this.edit_pokemon.aquireable = updatedObj[0].aquireable;
+        this.edit_pokemon.spawns = updatedObj[0].spawns;
+        this.edit_pokemon.regional = updatedObj[0].regional;
+        this.edit_pokemon.raidable = updatedObj[0].raidable;
+        this.edit_pokemon.hatchable = updatedObj[0].hatchable;
+        this.edit_pokemon.shiny = updatedObj[0].shiny;
+        this.edit_pokemon.nest = updatedObj[0].nest;
+        this.edit_pokemon.new_pokemon = updatedObj[0].new_pokemon;
+        this.edit_pokemon.not_gettable = updatedObj[0].not_gettable;
+        this.edit_pokemon.future_evolve = updatedObj[0].future_evolve;
+        this.edit_pokemon.full_cp_39 = updatedObj[0].full_cp_39;
+        this.edit_pokemon.full_cp_40 = updatedObj[0].full_cp_40;  
     },
     resetPokemonObject(obj) {
       this[obj] = {
@@ -823,7 +838,7 @@ export default {
   },
   watch: {
     filter() {
-      this.filter_order = 'asc';
+      this.pagination.page = 1;
     },
     filter_order() {
       this.pagination.page = 1;
