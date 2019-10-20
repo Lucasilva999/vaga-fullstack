@@ -33,6 +33,7 @@
             <option value="full_cp_40">100% CP @40</option>
             <option value="evolution_stage">EVOLUTION STAGE</option>
             <option value="family_id">FAMILY ID</option>
+            <option value="generation">GENERATION</option>
           </select>
         </li>
         <span class="nav-item text-uppercase text-monospace mr-2">Order By:</span>
@@ -45,7 +46,7 @@
       </ul>
       
       <!-- Modal Insert -->
-      <div id="modal_insert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div id="modal_insert" class="modal fade text-uppercase text-monospace" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
           <div class="modal-content mx-3 p-3">
             <div class="modal-header">
@@ -55,86 +56,96 @@
               </button>
             </div>
             <div class="modal-body">
-            <div class="form-row">
-              <div class="form-group col-md-1">
-                <label for="pokedex_number">Pokedex</label>
-                <input v-model.number="new_pokemon.pokedex_number" type="text" class="form-control" id="pokedex_number">
+            <div class="row">
+              <div class="col-sm-9">
+                <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="pokedex_number">Pokedex</label>
+                  <input v-model.number="new_pokemon.pokedex_number" type="text" class="form-control" id="pokedex_number">
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="name">Name</label>
+                  <input v-model.trim="new_pokemon.name" type="text" class="form-control" id="name">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="family_id">Family ID</label>
+                  <input  v-model.number="new_pokemon.family_id" type="text" class="form-control" id="family_id">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="generation">Generation</label>
+                  <select v-model="new_pokemon.generation" id="generation" class="form-control">
+                    <option disabled selected>Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                  </select>
+                </div>
               </div>
-              <div class="form-group col-md-3">
-                <label for="name">Name</label>
-                <input v-model.trim="new_pokemon.name" type="text" class="form-control" id="name">
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="atk">ATK</label>
+                  <input v-model.number="new_pokemon.atk" type="text" class="form-control" id="atk">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="def">DEF</label>
+                  <input v-model.number="new_pokemon.def" type="text" class="form-control" id="def">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="sta">STA</label>
+                  <input v-model.number="new_pokemon.sta" type="text" class="form-control" id="sta">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="full_cp_39">100% CP @39</label>
+                  <input v-model.number="new_pokemon.full_cp_39" type="text" class="form-control" id="full_cp_39">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="full_cp_40">100% CP @40</label>
+                  <input v-model.number="new_pokemon.full_cp_40" type="text" class="form-control" id="full_cp_40">
+                </div>
               </div>
-              <div class="form-group col-md-2">
-                <label for="family_id">Family ID</label>
-                <input  v-model.number="new_pokemon.family_id" type="text" class="form-control" id="family_id">
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="stat_total">Total Stat</label>
+                  <input v-model.number="new_pokemon.stat_total" type="text" class="form-control" id="stat_total">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="type_1">Type 1</label>
+                  <input v-model.trim="new_pokemon.type_1" type="text" class="form-control" id="type_1">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="type_2">Type 2</label>
+                  <input v-model.trim="new_pokemon.type_2" type="text" class="form-control" id="type_2">
+                </div>
               </div>
-              <div class="form-group col-md-2">
-                <label for="generation">Generation</label>
-                <select v-model="new_pokemon.generation" id="generation" class="form-control">
-                  <option disabled selected>Choose...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                </select>
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="evolution_stage">Evolution Stage</label>
+                  <select v-model="new_pokemon.evolution_stage" id="evolution_stage" class="form-control">
+                    <option disabled selected>Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="weather_1">Weather 1</label>
+                  <input v-model.trim="new_pokemon.weather_1" type="text" class="form-control" id="weather_1">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="weather_2">Weather 2</label>
+                  <input v-model.trim="new_pokemon.weather_2" type="text" class="form-control" id="weather_2">
+                </div>
               </div>
-              <div class="form-group col-md-2">
-                <label for="evolution_stage">Evolution Stage</label>
-                <select v-model="new_pokemon.evolution_stage" id="evolution_stage" class="form-control">
-                  <option disabled selected>Choose...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-3">
-                <label for="type_1">Type 1</label>
-                <input v-model.trim="new_pokemon.type_1" type="text" class="form-control" id="type_1">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="type_2">Type 2</label>
-                <input v-model.trim="new_pokemon.type_2" type="text" class="form-control" id="type_2">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-3">
-                <label for="weather_1">Weather 1</label>
-                <input v-model.trim="new_pokemon.weather_1" type="text" class="form-control" id="weather_1">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="weather_2">Weather 2</label>
-                <input v-model.trim="new_pokemon.weather_2" type="text" class="form-control" id="weather_2">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-1">
-                <label for="stat_total">Total Stat</label>
-                <input v-model.number="new_pokemon.stat_total" type="text" class="form-control" id="stat_total">
-              </div>
-              <div class="form-group col-md-1">
-                <label for="atk">ATK</label>
-                <input v-model.number="new_pokemon.atk" type="text" class="form-control" id="atk">
-              </div>
-              <div class="form-group col-md-1">
-                <label for="def">DEF</label>
-                <input v-model.number="new_pokemon.def" type="text" class="form-control" id="def">
-              </div>
-              <div class="form-group col-md-1">
-                <label for="sta">STA</label>
-                <input v-model.number="new_pokemon.sta" type="text" class="form-control" id="sta">
-              </div>
-              <div class="form-group col-md-2">
-                <label for="full_cp_39">100% CP @39</label>
-                <input v-model.number="new_pokemon.full_cp_39" type="text" class="form-control" id="full_cp_39">
-              </div>
-              <div class="form-group col-md-2">
-                <label for="full_cp_40">100% CP @40</label>
-                <input v-model.number="new_pokemon.full_cp_40" type="text" class="form-control" id="full_cp_40">
+              <div class="col-md-3">
+                <div class="img-container overflow-hidden py-4 pl-4" style="width: 14rem; height:19rem;">
+                    <img :src="new_pokemon.img" 
+                    alt="" class="mx-auto d-block img-fluid"/>
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -250,9 +261,9 @@
           </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="resetPokemonObject('new_pokemon')" type="button" class="btn btn-info">Clear</button>
-            <button @click="insertNewPokemon" type="button" class="btn btn-primary" data-dismiss="modal">Add Pokemon!</button>
+            <button type="button" class="btn btn-secondary text-uppercase text-monospace" data-dismiss="modal">Close</button>
+            <button @click="resetPokemonObject('new_pokemon')" type="button" class="btn btn-info text-uppercase text-monospace">Clear</button>
+            <button @click="insertNewPokemon" type="button" class="btn btn-primary text-uppercase text-monospace" data-dismiss="modal">Add Pokemon!</button>
           </div>
           </div>
         </div>
@@ -260,7 +271,7 @@
       <!-- End of Modal Insert -->
       
       <div v-for="(item) in paginatedAndFilteredPokemonList" :key="item._id">
-          <div class="card p-2" style="border:none;">
+          <div class="card p-2 overflow-hidden" style="border:none;">
             <div class="card-header bg-primary text-white">
               <span class="text-uppercase text-monospace font-weight-bold" style="font-size:1.5rem;">
                   {{item.name}}
@@ -276,7 +287,7 @@
             <div class="row text-uppercase text-monospace">
                 <div class="col-sm-2">
                     <div class="img-container" style="width: 10rem; height:10rem;">
-                        <img class="card-img-top img-fluid" :src="item.img" :alt="item.name">
+                        <img class="card-img-top img-fluid" :src="item.img" alt=""/>
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -323,7 +334,7 @@
         </div>
 
         <!-- Modal Edit -->
-        <div :id="'modal_edit_' + item._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div :id="'modal_edit_' + item._id" class="modal fade text-uppercase text-monospace" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content mx-3 p-3">
               <div class="modal-header">
@@ -333,88 +344,98 @@
                 </button>
               </div>
               <div class="modal-body">
-              <div class="form-row">
-                <div class="form-group col-md-1">
-                  <label for="pokedex_number">Pokedex</label>
-                  <input v-model.number="edit_pokemon.pokedex_number" type="text" class="form-control" id="pokedex_number">
+                <div class="row">
+                  <div class="col-sm-9">
+                    <div class="form-row">
+                    <div class="form-group col-md-2">
+                      <label for="pokedex_number">Pokedex</label>
+                      <input v-model.number="edit_pokemon.pokedex_number" type="text" class="form-control" id="pokedex_number">
+                    </div>
+                    <div class="form-group col-md-5">
+                      <label for="name">Name</label>
+                      <input v-model.trim="edit_pokemon.name" type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="family_id">Family ID</label>
+                      <input  v-model.number="edit_pokemon.family_id" type="text" class="form-control" id="family_id">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="generation">Generation</label>
+                      <select v-model="edit_pokemon.generation" id="generation" class="form-control">
+                        <option disabled selected>Choose...</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-2">
+                      <label for="atk">ATK</label>
+                      <input v-model.number="edit_pokemon.atk" type="text" class="form-control" id="atk">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="def">DEF</label>
+                      <input v-model.number="edit_pokemon.def" type="text" class="form-control" id="def">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="sta">STA</label>
+                      <input v-model.number="edit_pokemon.sta" type="text" class="form-control" id="sta">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="full_cp_39">100% CP @39</label>
+                      <input v-model.number="edit_pokemon.full_cp_39" type="text" class="form-control" id="full_cp_39">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="full_cp_40">100% CP @40</label>
+                      <input v-model.number="edit_pokemon.full_cp_40" type="text" class="form-control" id="full_cp_40">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-2">
+                      <label for="stat_total">Total Stat</label>
+                      <input v-model.number="edit_pokemon.stat_total" type="text" class="form-control" id="stat_total">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="type_1">Type 1</label>
+                      <input v-model.trim="edit_pokemon.type_1" type="text" class="form-control" id="type_1">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="type_2">Type 2</label>
+                      <input v-model.trim="edit_pokemon.type_2" type="text" class="form-control" id="type_2">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-2">
+                      <label for="evolution_stage">Evolution Stage</label>
+                      <select v-model="edit_pokemon.evolution_stage" id="evolution_stage" class="form-control">
+                        <option disabled selected>Choose...</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="weather_1">Weather 1</label>
+                      <input v-model.trim="edit_pokemon.weather_1" type="text" class="form-control" id="weather_1">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="weather_2">Weather 2</label>
+                      <input v-model.trim="edit_pokemon.weather_2" type="text" class="form-control" id="weather_2">
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="img-container overflow-hidden py-4 pl-4" style="width: 14rem; height:19rem;">
+                        <img :src="edit_pokemon.img" 
+                        alt="" class="mx-auto d-block img-fluid"/>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group col-md-3">
-                  <label for="name">Name</label>
-                  <input v-model.trim="edit_pokemon.name" type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="family_id">Family ID</label>
-                  <input  v-model.number="edit_pokemon.family_id" type="text" class="form-control" id="family_id">
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="generation">Generation</label>
-                  <select v-model="edit_pokemon.generation" id="generation" class="form-control">
-                    <option disabled selected>Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="evolution_stage">Evolution Stage</label>
-                  <select v-model="edit_pokemon.evolution_stage" id="evolution_stage" class="form-control">
-                    <option disabled selected>Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-3">
-                  <label for="type_1">Type 1</label>
-                  <input v-model.trim="edit_pokemon.type_1" type="text" class="form-control" id="type_1">
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="type_2">Type 2</label>
-                  <input v-model.trim="edit_pokemon.type_2" type="text" class="form-control" id="type_2">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-3">
-                  <label for="weather_1">Weather 1</label>
-                  <input v-model.trim="edit_pokemon.weather_1" type="text" class="form-control" id="weather_1">
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="weather_2">Weather 2</label>
-                  <input v-model.trim="edit_pokemon.weather_2" type="text" class="form-control" id="weather_2">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-1">
-                  <label for="stat_total">Total Stat</label>
-                  <input v-model.number="edit_pokemon.stat_total" type="text" class="form-control" id="stat_total">
-                </div>
-                <div class="form-group col-md-1">
-                  <label for="atk">ATK</label>
-                  <input v-model.number="edit_pokemon.atk" type="text" class="form-control" id="atk">
-                </div>
-                <div class="form-group col-md-1">
-                  <label for="def">DEF</label>
-                  <input v-model.number="edit_pokemon.def" type="text" class="form-control" id="def">
-                </div>
-                <div class="form-group col-md-1">
-                  <label for="sta">STA</label>
-                  <input v-model.number="edit_pokemon.sta" type="text" class="form-control" id="sta">
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="full_cp_39">100% CP @39</label>
-                  <input v-model.number="edit_pokemon.full_cp_39" type="text" class="form-control" id="full_cp_39">
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="full_cp_40">100% CP @40</label>
-                  <input v-model.number="edit_pokemon.full_cp_40" type="text" class="form-control" id="full_cp_40">
-                </div>
-              </div>
               <div class="form-group">
                 <label for="img">IMG Url</label>
                 <input v-model="edit_pokemon.img" type="text" class="form-control" id="img">
@@ -528,9 +549,9 @@
             </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button @click="resetPokemonObject('edit_pokemon')" type="button" class="btn btn-info">Clear</button>
-              <button @click="updatePokemon" type="button" class="btn btn-primary" data-dismiss="modal">Update Pokemon!</button>
+              <button type="button" class="btn btn-secondary text-uppercase text-monospace" data-dismiss="modal">Close</button>
+              <button @click="resetPokemonObject('edit_pokemon')" type="button" class="btn btn-info text-uppercase text-monospace">Clear</button>
+              <button @click="updatePokemon" type="button" class="btn btn-primary text-uppercase text-monospace" data-dismiss="modal">Update Pokemon!</button>
             </div>
             </div>
           </div>
@@ -538,7 +559,7 @@
         <!-- End of Modal Edit -->
 
         <!-- Modal Delete -->
-          <div :id="'modal_delete_' + item._id" class="modal fade" tabindex="-1" role="dialog">
+          <div :id="'modal_delete_' + item._id" class="modal fade text-uppercase text-monospace" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -553,8 +574,8 @@
                     <p>All information associated with It will be lost</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button @click="deletePokemon(item._id)" class="btn btn-primary" data-dismiss="modal">Delete Pokemon</button>
+                    <button type="button" class="btn btn-secondary text-uppercase text-monospace" data-dismiss="modal">Close</button>
+                    <button @click="deletePokemon(item._id)" class="btn btn-primary text-uppercase text-monospace" data-dismiss="modal">Delete Pokemon</button>
                 </div>
                 </div>
             </div>
